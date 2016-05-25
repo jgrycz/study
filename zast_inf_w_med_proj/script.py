@@ -1,4 +1,3 @@
-from pprint import pprint as pp
 import numpy as np
 
 
@@ -20,10 +19,11 @@ distance_nephritis = np.array([np.linalg.norm(row - avg_nephritis) for row in ne
 distance_helthy_ne = np.array([np.linalg.norm(row - avg_nephritis) for row in healthy])
 distance_helthy_in = np.array([np.linalg.norm(row - avg_inflammation) for row in healthy])
 
-print "\n".join("{} - {}".format(d, i) for i, d in zip(inflammation, distance_inflammation))
-print "\n\n"
-print "\n".join("{} - {}".format(d, i) for i, d in zip(nephritis, distance_nephritis))
-print "\n\n"
-print "\n".join("{} - {}".format(d, i) for i, d in zip(healthy, distance_helthy_ne))
-print "\n\n"
-print "\n".join("{} - {}".format(d, i) for i, d in zip(healthy, distance_helthy_in))
+print "inflammation"
+print "\n".join("{:<14} - {}".format(d, i) for i, d in sorted(zip(inflammation, distance_inflammation), key=lambda z: z[1]))
+print "\n\nhealthy to inflammation"
+print "\n".join("{:<14} - {}".format(d, i) for i, d in sorted(zip(healthy, distance_helthy_in), key=lambda z: z[1]))
+print "\n\nnephritis"
+print "\n".join("{:<14} - {}".format(d, i) for i, d in sorted(zip(nephritis, distance_nephritis), key=lambda z: z[1]))
+print "\n\nhealthy to nephritis"
+print "\n".join("{:<14} - {}".format(d, i) for i, d in sorted(zip(healthy, distance_helthy_ne), key=lambda z: z[1]))
