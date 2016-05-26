@@ -14,10 +14,10 @@ healthy = array[(array[:,7] == 0) & (array[:,6] == 0)]
 avg_inflammation = np.average(inflammation, axis=0)
 avg_nephritis = np.average(nephritis, axis=0)
 
-distance_inflammation = np.array([np.linalg.norm(row - avg_inflammation) for row in inflammation])
-distance_nephritis = np.array([np.linalg.norm(row - avg_nephritis) for row in nephritis])
-distance_helthy_ne = np.array([np.linalg.norm(row - avg_nephritis) for row in healthy])
-distance_helthy_in = np.array([np.linalg.norm(row - avg_inflammation) for row in healthy])
+distance_inflammation = np.array([np.linalg.norm(row[:6] - avg_inflammation[:6]) for row in inflammation])
+distance_nephritis = np.array([np.linalg.norm(row[:6] - avg_nephritis[:6]) for row in nephritis])
+distance_helthy_ne = np.array([np.linalg.norm(row[:6] - avg_nephritis[:6]) for row in healthy])
+distance_helthy_in = np.array([np.linalg.norm(row[:6] - avg_inflammation[:6]) for row in healthy])
 
 print "inflammation"
 print "\n".join("{:<14} - {}".format(d, i) for i, d in sorted(zip(inflammation, distance_inflammation), key=lambda z: z[1]))
