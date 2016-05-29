@@ -25,4 +25,8 @@ def calc_target(row):
 array = load_data()
 target = np.array([calc_target(row) for row in array])
 values = [pearsonr(array[:, i], target) for i in range(6)]
-pp(values)
+
+values = sorted(enumerate(values), key=lambda k: k[1][0])
+perumtation = np.argsort([num for num, _ in values])
+array = array[:,perumtation]
+print array
