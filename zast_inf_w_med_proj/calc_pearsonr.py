@@ -29,4 +29,18 @@ values = [pearsonr(array[:, i], target) for i in range(6)]
 values = sorted(enumerate(values), key=lambda k: k[1][0])
 perumtation = np.argsort([num for num, _ in values])
 array = array[:,perumtation]
-print array
+
+attributes = np.array([['temperature', 'occurrenceOfNausea', 'lumbarPain', 'urinePushing', 'micturitionPains', 'burningOfUrethra'],
+                       ['real']*6])
+attributes = attributes[:,perumtation].tolist()
+attributes[0].append('class')
+attributes[1].append('real')
+
+with open('dataset.arff', 'w') as f:
+    f.write('@relation default\n\n')
+    f.write("\n".join(["@attribute {} {}".format(a, t) for a, t in zip(attributes[0], attributes[1])]))
+    f.write('\n\n@data\n')
+    for attrs, cls in zip(array.tolist(), target.tolist()):
+        attrs.append(cls)
+        f.write(",".join([str(attr) for attr in attrs]))
+        f.write("\n")
