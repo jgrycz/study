@@ -35,7 +35,9 @@ array = np.insert(array, 6, target, axis=1)
 
 attributes = np.array([['temperature', 'occurrenceOfNausea', 'lumbarPain', 'urinePushing', 'micturitionPains', 'burningOfUrethra'],
                        ['real']+['{0,1}']*5])
+import pdb; pdb.set_trace()
 attributes = attributes[:,perumtation].tolist()
+
 attributes[0].append('class')
 attributes[1].append('{0,1,2,3}')
 
