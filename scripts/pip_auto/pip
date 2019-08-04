@@ -1,0 +1,76 @@
+command=""
+
+_pip_auto() {
+    base_path="/home/ute/workspace/scripts/pip_auto"
+    commands="install uninstall freeze list show search wheel zip unzip help"
+    install="--no-deps --no-compile --editable --no-clean --allow-external -I --force-reinstall --cache-dir -U -V --proxy --allow-unverified -e -d -f -b --download --install-option -i -h -t -v -q --build -r --global-option --client-cert --exists-action --egg --cert --find-links --isolated --timeout --target --no-install --trusted-host --no-use-wheel --index-url --root --src --version --compile --no-index --quiet --no-cache-dir --upgrade --allow-all-external --log --retries --ignore-installed --no-download --pre --verbose --disable-pip-version-check --requirement --user --install-scripts --process-dependency-links --help --extra-index-url"
+    uninstall="--verbose -V --proxy --yes -h -v -q --no-index -r -y --exists-action --isolated --timeout --version --retries --cert --quiet --no-cache-dir --log --cache-dir --disable-pip-version-check --requirement --trusted-host --client-cert --help"
+    freeze="--find-links --user -V --proxy --local -f -l -h -v -q --no-index -r --exists-action --isolated --timeout --verbose --retries --version --cert --quiet --no-cache-dir --log --cache-dir --disable-pip-version-check --requirement --trusted-host --client-cert --help"
+    list="--find-links --process-dependency-links --editable --allow-external --user -V --retries --allow-unverified -e -f --pre -l -o -i -h -u -v -q --cert --exists-action --local --isolated --timeout --verbose --trusted-host --proxy --version --no-index --quiet --no-cache-dir --allow-all-external --log --cache-dir --disable-pip-version-check --uptodate --outdated --index-url --client-cert --help --extra-index-url"
+    show="--verbose -V --proxy -f -h -v -q --no-index --exists-action --isolated --timeout --version --retries --cert --quiet --no-cache-dir --log --files --cache-dir --disable-pip-version-check --trusted-host --client-cert --help"
+    search="--verbose -V --proxy --index -h -v -q --no-index --exists-action --isolated --timeout --version --retries --cert --quiet --no-cache-dir --log --cache-dir --disable-pip-version-check --trusted-host --client-cert --help"
+    wheel="--find-links --process-dependency-links --editable --no-clean --allow-external --verbose -V --proxy --allow-unverified -e -f --wheel-dir -b --pre -i -h -w -v -q --build -r --global-option --build-option --isolated --timeout --version --no-use-wheel --cert --src --no-index --quiet --no-cache-dir --allow-all-external --log --retries --no-deps --cache-dir --disable-pip-version-check --exists-action --requirement --trusted-host --index-url --client-cert --help --extra-index-url"
+    zip="--sort-files --verbose --path -V --proxy --no-pyc -l -n -h -v -q --cert --list --exists-action --isolated --timeout --version --retries --simulate --quiet --no-cache-dir --log --cache-dir --disable-pip-version-check --unzip --trusted-host --client-cert --no-index --help"
+    unzip="--sort-files --verbose --path -V --proxy --no-pyc -l -n -h -v -q --cert --list --exists-action --isolated --timeout --version --retries --zip --simulate --quiet --no-cache-dir --log --cache-dir --disable-pip-version-check --trusted-host --client-cert --no-index --help"
+    help="-v --no-cache-dir --client-cert --isolated --quiet --log --timeout -h --cache-dir --verbose --disable-pip-version-check -V -q --cert --retries --trusted-host --proxy --version --no-index --help --exists-action"
+
+    installed=$(cat $base_path/installed_packages 2>/dev/null)
+    possible_install=$(cat $base_path/pypi_packages 2>/dev/null)
+
+    local cur
+    cur="${COMP_WORDS[COMP_CWORD]}"
+
+    if [ $COMP_CWORD == 1 ] ; then
+        COMPREPLY=( $(compgen -W "${commands}" -- ${cur}) )
+        command=${COMPREPLY}
+        return 0
+    fi
+
+    if [ -z $command ]; then
+        command="${COMP_WORDS[1]}"
+    fi
+
+    if [ $command == show ] && [[ $cur != -* ]] ; then
+        COMPREPLY=( $(compgen -W "${installed}" -- ${cur} ) )
+        return 0
+    elif [ $command == uninstall ] && [[ $cur != -* ]] ; then
+        COMPREPLY=( $(compgen -W "${installed}" -- ${cur} ) )
+        return 0
+    elif [ $command == install ] && [[ ${cur} != -* ]] ; then
+        COMPREPLY=( $(compgen -W "${possible_install}" -- ${cur} ) )
+        return 0
+    elif [ $command == install ] && [[ ${cur} == -* ]] ; then
+        COMPREPLY=( $(compgen -W "${install}" -- ${cur} ) )
+        return 0
+    elif [ $command == uninstall ] && [[ ${cur} == -* ]] ; then
+        COMPREPLY=( $(compgen -W "${uninstall}" -- ${cur} ) )
+        return 0
+    elif [ $command == freeze ] && [[ ${cur} == -* ]] ; then
+        COMPREPLY=( $(compgen -W "${freeze}" -- ${cur} ) )
+        return 0
+    elif [ $command == list ] && [[ ${cur} == -* ]] ; then
+        COMPREPLY=( $(compgen -W "${list}" -- ${cur} ) )
+        return 0
+    elif [ $command == show ] && [[ ${cur} == -* ]] ; then
+        COMPREPLY=( $(compgen -W "${show}" -- ${cur} ) )
+        return 0
+    elif [ $command == search ] && [[ ${cur} == -* ]] ; then
+        COMPREPLY=( $(compgen -W "${search}" -- ${cur} ) )
+        return 0
+    elif [ $command == wheel ] && [[ ${cur} == -* ]] ; then
+        COMPREPLY=( $(compgen -W "${wheel}" -- ${cur} ) )
+        return 0
+    elif [ $command == zip ] && [[ ${cur} == -* ]] ; then
+        COMPREPLY=( $(compgen -W "${zip}" -- ${cur} ) )
+        return 0
+    elif [ $command == unzip ] && [[ ${cur} == -* ]] ; then
+        COMPREPLY=( $(compgen -W "${unzip}" -- ${cur} ) )
+        return 0
+    elif [ $command == help ] && [[ ${cur} == -* ]] ; then
+        COMPREPLY=( $(compgen -W "${help}" -- ${cur} ) )
+        return 0
+    fi
+
+}
+
+complete -o default -F _pip_auto pip

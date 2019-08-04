@@ -1,0 +1,28 @@
+[merge]
+    tool = kdiff3
+
+[diff]
+    tool = kdiff3
+
+[difftool "kdiff3"]
+    path = kdiff3
+    keepBackup = flase
+    thrustExicCode = false
+
+[mergetool "kdiff3"]
+    path = kdiff3
+    keepBackup = flase
+    thrustExicCode = false
+
+[user]
+	name = jgrycz
+	email = jaroslaw.grycz@gmail.com
+[core]
+	excludesfile = /home/ute/.gitignore
+[alias]
+	co = checkout
+	br = branch
+	ci = commit
+	st = status
+[push]
+	default = matching

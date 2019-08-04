@@ -1,0 +1,5 @@
+#!/bin/sh
+echo "================ MERGE ==================" >> /home/jgrycz/dupa
+echo "$@" >> /home/jgrycz/dupa
+echo "=========================================" >> /home/jgrycz/dupa
+kdiff3 "$1" "$2" "$3" -o "$4"

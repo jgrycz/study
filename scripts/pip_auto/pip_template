@@ -1,0 +1,34 @@
+command=""
+
+_pip_auto() {
+    variables_section
+    installed=$(cat $base_path/installed_packages 2>/dev/null)
+    possible_install=$(cat $base_path/pypi_packages 2>/dev/null)
+
+    local cur
+    cur="${COMP_WORDS[COMP_CWORD]}"
+
+    if [ $COMP_CWORD == 1 ] ; then
+        COMPREPLY=( $(compgen -W "${commands}" -- ${cur}) )
+        command=${COMPREPLY}
+        return 0
+    fi
+
+    if [ -z $command ]; then
+        command="${COMP_WORDS[1]}"
+    fi
+
+    if [ $command == show ] && [[ $cur != -* ]] ; then
+        COMPREPLY=( $(compgen -W "${installed}" -- ${cur} ) )
+        return 0
+    elif [ $command == uninstall ] && [[ $cur != -* ]] ; then
+        COMPREPLY=( $(compgen -W "${installed}" -- ${cur} ) )
+        return 0
+    elif [ $command == install ] && [[ ${cur} != -* ]] ; then
+        COMPREPLY=( $(compgen -W "${possible_install}" -- ${cur} ) )
+        return 0conditions_section
+    fi
+
+}
+
+complete -o default -F _pip_auto pip
