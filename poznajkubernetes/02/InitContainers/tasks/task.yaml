@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: webapp
+  labels:
+    name: webapp
+spec:
+  containers:
+  - name: webapp
+    image: nginx
+    volumeMounts:
+      - name: webapp-volume
+        mountPath: /usr/share/nginx/html
+    ports:
+      - containerPort: 80
+  initContainers:
+    - name: init-app
+      image: ubuntu
+      command: ['sh', '-c', 'apt update; apt install -fy git; git clone https://github.com/jgrycz/study.git /data/study; mv /data/study/poznajkubernetes/02/InitContainers/tasks/index.html /data; rm -rf /data/study;']
+      volumeMounts:
+      - name: webapp-volume
+        mountPath: /data
+  volumes:
+    - name: webapp-volume
+      emptyDir: {}
