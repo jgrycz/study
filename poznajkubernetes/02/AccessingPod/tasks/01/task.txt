@@ -1,0 +1,41 @@
+Stwórz Pod na bazie obrazu z modułu 1
+    Zobacz w jakim stanie on się znajduje
+        $ kubectl get pod
+        NAME       READY   STATUS    RESTARTS   AGE
+        helloapp   1/1     Running   0          3m42s
+
+    Podejrzyj jego logi
+        $ kubectl logs  helloapp
+        server started
+
+    Wykonaj w koneterze wylistowanie katalogów
+        $ kubectl exec -it helloapp -- ls -la
+        OCI runtime exec failed: exec failed: container_linux.go:345: starting container process caused "exec: \"ls\": executable file not found in $PATH": unknown
+        command terminated with exit code 126
+        Zapomnialem że to mulit...
+
+    Odpytaj się http://localhost:PORT w koneterze
+        Wiec to też nie przejdzie
+
+    Zrób to samo z powołanego osobno poda (kubectl run)
+        $ kubectl describe pods helloapp | grep IP
+        IP:           10.244.0.57
+
+        $ kubectl run test --image=busybox --rm -it --restart=Never -- /bin/sh
+        If you don't see a command prompt, try pressing enter.
+        / # hostname
+        test
+        / # wget -qO- http://10.244.0.57:8080
+        Cześć, 🚢
+
+    Dostań się do poda za pomocą przekierowania portów
+        $ kubectl port-forward helloapp 8080:8080
+        Forwarding from 127.0.0.1:8080 -> 8080
+        Forwarding from [::1]:8080 -> 8080
+        Handling connection for 8080
+
+        $ curl http://localhost:8080
+        Cześć, 🚢
+
+    Dostań się do poda za pomocą API Server
+        http://localhost:8001/api/v1/namespaces/default/pods/helloapp

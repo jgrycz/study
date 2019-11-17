@@ -1,0 +1,53 @@
+Stwórz Pod zawierający dwa kontenery – busybox i poznajkubernetes/helloapp:multi
+    Zweryfikuj, że Pod działa poprawnie
+        Pod nie działa poprawnie ale działa zgodnie z przewidywaniem, mamy działający tylko jeden kontener:
+            $ kubectl get pod 
+            NAME              READY   STATUS             RESTARTS   AGE
+            multi-container   1/2     CrashLoopBackOff   1          18s
+
+        i jest nim konetner helloapp:
+            Containers:
+            first-container:
+                Container ID:   docker://f6f5fc43629991c8439135cf1939adb9deee5e9ced68cab4b85632ae37f082df
+                Image:          busybox
+                Image ID:       docker-pullable://busybox@sha256:1303dbf110c57f3edf68d9f5a16c082ec06c4cf7604831669faf2c712260b5a0
+                Port:           <none>
+                Host Port:      <none>
+                State:          Terminated
+                Reason:       Completed
+                Exit Code:    0
+                Started:      Sun, 17 Nov 2019 23:53:34 +0100
+                Finished:     Sun, 17 Nov 2019 23:53:34 +0100
+                Last State:     Terminated
+                Reason:       Completed
+                Exit Code:    0
+                Started:      Sun, 17 Nov 2019 23:53:15 +0100
+                Finished:     Sun, 17 Nov 2019 23:53:15 +0100
+                Ready:          False
+                Restart Count:  2
+                Environment:    <none>
+                Mounts:
+                /var/run/secrets/kubernetes.io/serviceaccount from default-token-76rlb (ro)
+            second-container:
+                Container ID:   docker://126d1aac67a790be41b39f5f8e67e0fc3980c87a667a14e4cf58398099c68ba6
+                Image:          poznajkubernetes/helloapp:multi
+                Image ID:       docker-pullable://poznajkubernetes/helloapp@sha256:6bae4ef606a02436aa94e5eb9dfb62e943f6a152cfabbafb7c61508b1c48e222
+                Port:           <none>
+                Host Port:      <none>
+                State:          Running
+                Started:      Sun, 17 Nov 2019 23:53:10 +0100
+                Ready:          True
+                Restart Count:  0
+                Environment:    <none>
+                Mounts:
+
+            Kontener busybox skonczył swoje działanie z kodem 0 gdyż zwyczajnie nie miał żadnej pracy do wykonania
+
+    Jak nie działa, dowiedz się dlaczego
+        j.w
+
+    Zastanów się nad rozwiązaniem problemu jeżeli istnieje – co można by było zrobić i jak
+        po dodaniu pinga (*updated.yaml) oba kontenery sa w stanie Running:
+            $ kubectl get pod
+            NAME              READY   STATUS    RESTARTS   AGE
+            multi-container   2/2     Running   0          15s
