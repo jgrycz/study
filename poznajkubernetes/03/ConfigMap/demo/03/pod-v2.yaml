@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pkad
+  labels:
+    name: pkad
+spec:
+  volumes:
+    - name: cm-t1-v
+      configMap:
+        name: t1cm
+    - name: cm-t3-v
+      configMap:
+        name: t3cm
+        items:
+        - key: config.toml
+          path: awsome_init_as_toml.toml
+  containers:
+  - name: pkad
+    image: poznajkubernetes/pkad
+    volumeMounts:
+      - name: cm-t1-v
+        mountPath: /etc/config/t1cm
+      - name: cm-t3-v
+        mountPath: /etc/config/t3cm
+    resources: {}
+    env:
+    - name: TEST
+      value: "Poznaj kubernetesa hehe"
+    ports:
+      - containerPort: 8080

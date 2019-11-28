@@ -1,0 +1,5 @@
+$ k create cm cm-02 --from-literal=key1=val1 --from-literal=key1=val2 --from-file=config1.cfg --from-file=konfig_2=config2.cfg
+error: cannot add key "key1", another key by that name already exists in Data for ConfigMap "cm-02"
+$ k create cm cm-02 --from-literal=key1=val1 --from-file=config1.cfg --from-file=konfig_2=config2.cfg
+configmap/cm-02 created
+

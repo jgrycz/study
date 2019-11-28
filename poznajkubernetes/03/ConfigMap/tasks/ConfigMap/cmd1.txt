@@ -1,0 +1,2 @@
+$ k create cm cm-01 --from-literal=key1=val1 --from-literal=key2=val2 --from-literal=123_TESTING=1000 --from-literal=TESTING-123=milion --from-literal=TESTING=1000
+configmap/cm-01 created

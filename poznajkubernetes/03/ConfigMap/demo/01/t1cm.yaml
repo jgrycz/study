@@ -1,0 +1,12 @@
+apiVersion: v1
+data:
+  klucz1: wartosc1
+  klucz2: wartosc2
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2019-11-21T23:05:44Z"
+  name: t1cm
+  namespace: default
+  resourceVersion: "93574"
+  selfLink: /api/v1/namespaces/default/configmaps/t1cm
+  uid: edd84841-0e32-44ac-bbcd-1fea801a20aa

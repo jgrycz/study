@@ -1,0 +1,2 @@
+$ k create cm cm-03 --from-file=config3-20KB.cfg --from-file=config3-30KB.cfg --from-file=config3-40KB.cfg --from-file=config3-50KB.cfg
+$

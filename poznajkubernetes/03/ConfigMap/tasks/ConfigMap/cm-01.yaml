@@ -1,0 +1,15 @@
+apiVersion: v1
+data:
+  123_TESTING: "1000"
+  TESTING: "1000"
+  TESTING-123: milion
+  key1: val1
+  key2: val2
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2019-11-24T22:50:16Z"
+  name: cm-01
+  namespace: default
+  resourceVersion: "98802"
+  selfLink: /api/v1/namespaces/default/configmaps/cm-01
+  uid: 6167f21e-9685-43aa-9a2d-086a88f84668

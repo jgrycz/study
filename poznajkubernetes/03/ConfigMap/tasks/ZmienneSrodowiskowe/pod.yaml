@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pkad
+  labels:
+    name: pkad
+spec:
+  containers:
+  - name: pkad
+    image: poznajkubernetes/pkad
+    resources: {}
+    envFrom:
+      - configMapRef:
+          name: cm-01
+    env:
+      - name: TEST
+        value: "TEST_HEHE"
+      - name: CM2_CFG1
+        valueFrom:
+            configMapKeyRef:
+              key: config1.cfg
+              name: cm-02
+      - name: CM2_CFG2
+        valueFrom:
+            configMapKeyRef:
+              key: konfig_2
+              name: cm-02
+    ports:
+      - containerPort: 8080

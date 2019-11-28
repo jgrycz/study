@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pkad
+  labels:
+    name: pkad
+spec:
+  restartPolicy: Never
+  containers:
+  - name: pkad
+    image: poznajkubernetes/pkad
+    resources: {}
+    envFrom:
+      - configMapRef:
+          name: t2cm
+          optional: true
+    env:
+    - name: TEST
+      value: "Poznaj kubernetesa hehe"
+    - name: FROM_CM
+      valueFrom:
+        configMapKeyRef:
+          key: klucz1
+          name: t1cm
+    ports:
+      - containerPort: 8080

@@ -1,0 +1,22 @@
+apiVersion: v1
+data:
+  config1.cfg: |
+    jakis
+      taki
+        dziwny
+      ten
+    config
+  key1: val1
+  konfig_2: |
+    ten
+    tez
+    jakis
+    dziwny
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2019-11-24T22:55:39Z"
+  name: cm-02
+  namespace: default
+  resourceVersion: "99195"
+  selfLink: /api/v1/namespaces/default/configmaps/cm-02
+  uid: 4ae46cbe-0f32-4a74-808d-6dcc922a20ae

@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pkad
+  labels:
+    name: pkad
+spec:
+  volumes:
+    - name: cm-02-v
+      configMap:
+        name: cm-02
+    - name: cm-03-v
+      configMap:
+          name: cm-03
+          items:
+          - key: "config3-30KB.cfg"
+            path: "30KB.cfg"
+          - key: "config3-40KB.cfg"
+            path: "40KB.cfg"
+          - key: "config3-50KB.cfg"
+            path: "50KB.cfg"
+  containers:
+  - name: pkad
+    image: poznajkubernetes/pkad
+    volumeMounts:
+      - name: cm-02-v
+        mountPath: "/etc/network"
+    resources: {}
+    ports:
+      - containerPort: 8080

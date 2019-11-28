@@ -1,0 +1,7 @@
+apiVersion: v1
+data:
+  klucz1: heheh
+  klucz2: hoho
+kind: ConfigMap
+metadata:
+  name: t1cm
