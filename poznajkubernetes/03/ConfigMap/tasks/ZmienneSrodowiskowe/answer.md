@@ -1,6 +1,6 @@
 #1. Co ma pierwszeństwo: zmienna środowiskowa zdefiniowana w ConfiMap czy w Pod?
 
-Bazujac na Podzie z pliku [pod.yaml](blob/master/poznajkubernetes/03/ConfigMap/tasks/ZmienneSrodowiskowe/pod.yaml), wyglada na to, że pierwszeństwo mają zmienne z ConfigMapy
+Bazujac na Podzie z pliku [pod.yaml](pod.yaml), wyglada na to, że pierwszeństwo mają zmienne z ConfigMapy
 
 ```
 $ k exec pkad -- printenv
@@ -33,8 +33,8 @@ KUBERNETES_PORT_443_TCP_PORT=443
 HOME=/
 ```
 #2. Czy kolejność definiowania ma znaczenie (np.: env przed envFrom)?
-
-Tak ma, potwierdzają to pody [pod.yaml](blob/master/poznajkubernetes/03/ConfigMap/tasks/ZmienneSrodowiskowe/pod.yaml) i [pod-changed-order.yaml](blob/master/poznajkubernetes/03/ConfigMap/tasks/ZmienneSrodowiskowe/pod-changed-order.yaml)
+                                      
+Tak ma, potwierdzają to pody [pod.yaml](pod.yaml) i [pod-changed-order.yaml](pod-changed-order.yaml)
 ```
 $ k exec pkad -- printenv
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
@@ -68,7 +68,7 @@ HOME=/
 
 #3. Jak się ma kolejność do dwóch różnych ConfigMap?
 
-Podczas zdefiniowania zmiennych "naprzemiennie" patrz [pod-cm-order.yaml](blob/master/poznajkubernetes/03/ConfigMap/tasks/ZmienneSrodowiskowe/pod-cm-order.yaml), zmienne zostały wczytane zgodnie z taką samą kolejnością:
+Podczas zdefiniowania zmiennych "naprzemiennie" patrz [pod-cm-order.yaml](pod-cm-order.yaml), zmienne zostały wczytane zgodnie z taką samą kolejnością:
 
 ```
 $ k exec pkad -- printenv
