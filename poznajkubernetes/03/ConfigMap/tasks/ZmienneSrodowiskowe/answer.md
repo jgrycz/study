@@ -1,4 +1,4 @@
-#1. Co ma pierwszeństwo: zmienna środowiskowa zdefiniowana w ConfiMap czy w Pod?
+# Co ma pierwszeństwo: zmienna środowiskowa zdefiniowana w ConfiMap czy w Pod?
 
 Bazujac na Podzie z pliku [pod.yaml](pod.yaml), wyglada na to, że pierwszeństwo mają zmienne z ConfigMapy
 
@@ -32,7 +32,7 @@ KUBERNETES_PORT_443_TCP_PROTO=tcp
 KUBERNETES_PORT_443_TCP_PORT=443
 HOME=/
 ```
-#2. Czy kolejność definiowania ma znaczenie (np.: env przed envFrom)?
+# Czy kolejność definiowania ma znaczenie (np.: env przed envFrom)?
                                       
 Tak ma, potwierdzają to pody [pod.yaml](pod.yaml) i [pod-changed-order.yaml](pod-changed-order.yaml)
 ```
@@ -66,7 +66,7 @@ KUBERNETES_PORT_443_TCP_PORT=443
 HOME=/
 ```
 
-#3. Jak się ma kolejność do dwóch różnych ConfigMap?
+# Jak się ma kolejność do dwóch różnych ConfigMap?
 
 Podczas zdefiniowania zmiennych "naprzemiennie" patrz [pod-cm-order.yaml](pod-cm-order.yaml), zmienne zostały wczytane zgodnie z taką samą kolejnością:
 
