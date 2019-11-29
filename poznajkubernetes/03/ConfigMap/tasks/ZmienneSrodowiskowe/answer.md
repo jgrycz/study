@@ -1,6 +1,8 @@
-1. Co ma pierwszeństwo: zmienna środowiskowa zdefiniowana w ConfiMap czy w Pod?
-Bazujac na Podzie z pliku pod.yaml, wyglada na to, że pierwszeństwo mają zmienne z ConfigMapy
+#1. Co ma pierwszeństwo: zmienna środowiskowa zdefiniowana w ConfiMap czy w Pod?
 
+Bazujac na Podzie z pliku [pod.yaml](blob/master/poznajkubernetes/03/ConfigMap/tasks/ZmienneSrodowiskowe/pod.yaml), wyglada na to, że pierwszeństwo mają zmienne z ConfigMapy
+
+```
 $ k exec pkad -- printenv
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 HOSTNAME=pkad
@@ -29,10 +31,11 @@ KUBERNETES_PORT_443_TCP=tcp://10.96.0.1:443
 KUBERNETES_PORT_443_TCP_PROTO=tcp
 KUBERNETES_PORT_443_TCP_PORT=443
 HOME=/
+```
+#2. Czy kolejność definiowania ma znaczenie (np.: env przed envFrom)?
 
-2. Czy kolejność definiowania ma znaczenie (np.: env przed envFrom)?
-Tak ma, potwierdzają to pody pod.yaml i pod-changed-order.yaml
-
+Tak ma, potwierdzają to pody [pod.yaml](blob/master/poznajkubernetes/03/ConfigMap/tasks/ZmienneSrodowiskowe/pod.yaml) i [pod-changed-order.yaml](blob/master/poznajkubernetes/03/ConfigMap/tasks/ZmienneSrodowiskowe/pod-changed-order.yaml)
+```
 $ k exec pkad -- printenv
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 HOSTNAME=pkad
@@ -61,9 +64,13 @@ KUBERNETES_PORT_443_TCP=tcp://10.96.0.1:443
 KUBERNETES_PORT_443_TCP_PROTO=tcp
 KUBERNETES_PORT_443_TCP_PORT=443
 HOME=/
+```
 
-3. Jak się ma kolejność do dwóch różnych ConfigMap?
-Podczas zdefiniowania zmiennych "naprzemiennie" patrz pod-cm-order.yaml, zmienne zostały wczytane zgodnie z taką samą kolejnością:
+#3. Jak się ma kolejność do dwóch różnych ConfigMap?
+
+Podczas zdefiniowania zmiennych "naprzemiennie" patrz [pod-cm-order.yaml](blob/master/poznajkubernetes/03/ConfigMap/tasks/ZmienneSrodowiskowe/pod-cm-order.yaml), zmienne zostały wczytane zgodnie z taką samą kolejnością:
+
+```
 $ k exec pkad -- printenv
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 HOSTNAME=pkad
@@ -90,5 +97,5 @@ KUBERNETES_PORT_443_TCP_ADDR=10.96.0.1
 KUBERNETES_SERVICE_HOST=10.96.0.1
 KUBERNETES_SERVICE_PORT=443
 HOME=/
-
+```
 
