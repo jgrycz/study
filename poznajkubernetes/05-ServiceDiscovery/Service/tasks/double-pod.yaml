@@ -1,0 +1,59 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp-instance-1
+  labels:
+    app: myapp
+    ver: v1
+spec:
+  volumes:
+    - name: storage-volume
+      emptyDir: {}
+  initContainers:
+    - name: busybox
+      image: busybox
+      command: ['sh', '-c', 'echo "<h1>Czołem z instancji 1!</h1>" > /storage/index.html;']
+      volumeMounts:
+        - mountPath: /storage/
+          name: storage-volume
+  containers:
+  - name: myapp
+    image: nginx
+    resources: {}
+    ports:
+      - containerPort: 80
+        name: http
+        protocol: TCP
+    volumeMounts:
+      - mountPath: /usr/share/nginx/html
+        name: storage-volume       
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp-instance-2
+  labels:
+    app: myapp
+    ver: v2
+spec:
+  volumes:
+    - name: storage-volume
+      emptyDir: {}
+  initContainers:
+    - name: busybox
+      image: busybox
+      command: ['sh', '-c', 'echo "<h1>Czołem z instancji 2!</h1>" > /storage/index.html;']
+      volumeMounts:
+        - mountPath: /storage/
+          name: storage-volume
+  containers:
+  - name: myapp
+    image: nginx
+    resources: {}
+    ports:
+      - containerPort: 80
+        name: http
+        protocol: TCP
+    volumeMounts:
+      - mountPath: /usr/share/nginx/html
+        name: storage-volume

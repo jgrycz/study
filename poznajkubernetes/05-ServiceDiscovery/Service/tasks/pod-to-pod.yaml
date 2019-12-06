@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp
+  labels:
+    name: myapp
+spec:
+  volumes:
+    - name: storage-volume
+      emptyDir: {}
+  initContainers:
+    - name: busybox
+      image: busybox
+      command: ['sh', '-c', 'echo "<h1>Czołem!</h1>" > /storage/index.html;']
+      volumeMounts:
+        - mountPath: /storage/
+          name: storage-volume
+  containers:
+  - name: myapp
+    image: nginx
+    resources: {}
+    ports:
+      - containerPort: 80
+        name: http
+        protocol: TCP
+    volumeMounts:
+      - mountPath: /usr/share/nginx/html
+        name: storage-volume       
+---
+  apiVersion: v1
+  kind: Pod
+  metadata:
+    name: tools
+    labels:
+      name: tools
+  spec:
+    containers:
+    - name: tools
+      image: busybox
+      resources: {}
+      command: ['sh', '-c', 'while true; do echo "I am still alive"; sleep 10; done;']
