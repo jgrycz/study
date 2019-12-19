@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: new-rs
+  labels:
+    name: new-rs
+    tier: test-rs
+spec:
+  containers:
+  - name: test
+    image: poznajkubernetes/pkad:green
+    resources: {}
