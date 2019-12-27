@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: homework-app
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: homework-app
+  template:
+    metadata:
+      labels:
+        app: homework-app
+    spec:
+      volumes:
+      - name: storage-volume
+        emptyDir: {}
+      initContainers:
+        - name: busybox
+          image: busybox
+          command: ['sh', '-c', 'echo "<h1>Czołem!</h1>" > /storage/index.html;']
+          volumeMounts:
+            - mountPath: /storage/
+              name: storage-volume
+      containers:
+      - name: homework-app
+        image: nginx
+        resources: {}
+        env:
+        - name: version
+          value: v3
+        - name: pod
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        ports:
+        - containerPort: 80
+          name: http
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html
+          name: storage-volume  
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: homework-app
+spec:
+  type: ClusterIP
+  selector:
+    app: homework-app
+  ports:
+  - port: 80
+    name: http
+    targetPort: http
