@@ -1,0 +1,24 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: cron-job
+spec:
+  jobTemplate:
+    metadata:
+      name: cron-job
+    spec:
+      parallelism: 2
+      completions: 2
+      template:
+        metadata:
+          name: cron-job
+        spec:
+          containers:
+          - image: busybox
+            name: cron-job
+            command: ["/bin/sh", "-c", "for NUM in $(seq 1 180); do echo Log $NUM; sleep 1; done"]
+            resources: {}
+          restartPolicy: Never
+  schedule: "*/2 * * * *"
+  concurrencyPolicy: Forbid
+status: {}
