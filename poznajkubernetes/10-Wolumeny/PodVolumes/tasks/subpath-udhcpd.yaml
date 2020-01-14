@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cm-sub-path
+data:
+  udhcpd.conf: "jakas dziwna wartosc"
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sub-path
+  labels:
+    name: sub-path
+spec:
+  volumes:
+  - name: cm
+    configMap:
+      name: cm-sub-path
+  containers:
+  - name: sub-path
+    image: poznajkubernetes/pkad
+    resources: {}
+    ports:
+      - containerPort: 8080
+    volumeMounts:
+      - name: cm
+        mountPath: /etc/udhcpd.conf
+        subPath: udhcpd.conf

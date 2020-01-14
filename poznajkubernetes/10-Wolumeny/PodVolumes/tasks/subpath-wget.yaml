@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cm-sub-path-wget
+data:
+  wget: "to na pewno nie zadziała jak wget"
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sub-path-wget
+  labels:
+    name: sub-path-wget
+spec:
+  volumes:
+  - name: cm
+    configMap:
+      name: cm-sub-path-wget
+  containers:
+  - name: sub-path-wget
+    image: poznajkubernetes/pkad
+    resources: {}
+    ports:
+      - containerPort: 8080
+    volumeMounts:
+      - name: cm
+        mountPath: /usr/bin/wget
+        subPath: wget
