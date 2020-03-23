@@ -1,10 +1,12 @@
+from .base import BaseRPIObject
+
 from itertools import cycle
 from time import sleep
 
 import RPi.GPIO as GPIO
 
 
-class SevenSegmentsDisplay:
+class SevenSegmentsDisplay(BaseRPIObject):
     NUMBERS = {
         0: ['a', 'b', 'c', 'd', 'e', 'f'],
         1: ['b', 'c'],
@@ -19,6 +21,7 @@ class SevenSegmentsDisplay:
         }
 
     def __init__(self, a, b, c, d, e, f, g, dp, init_number=None):
+        super().__init__()
         self.current_number = None
         self.dp_state = False
         self.segments = {'a': a, 'b': b, 'c': c, 'd': d,

@@ -1,8 +1,11 @@
-from led import Led
+from .base import BaseRPIObject
+
+from .led import Led
 
 
-class StatusLeds:
+class StatusLeds(BaseRPIObject):
     def __init__(self, red, yellow, green, init_state=None):
+        super().__init__()
         self.state = None
         self.red = Led(red, 'red')
         self.yellow = Led(yellow, 'yellow')

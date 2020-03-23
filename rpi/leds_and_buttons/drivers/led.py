@@ -1,10 +1,13 @@
+from .base import BaseRPIObject
+
 from time import sleep
 
 import RPi.GPIO as GPIO
 
 
-class Led:
+class Led(BaseRPIObject):
     def __init__(self, gpio_num, name):
+        super().__init__()
         self.gpio_num = gpio_num
         self.name = name
         self.state = False
@@ -22,7 +25,7 @@ class Led:
     def is_on(self):
         return self.state
 
-    def blink(self, times=1):
+    def blink(self, sleep_time=0.1, times=1):
         print("Blinking {}".format(self.name))
         state = self.state
         for _ in range(times):

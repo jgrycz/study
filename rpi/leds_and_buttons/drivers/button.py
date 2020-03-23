@@ -1,7 +1,10 @@
+from .base import BaseRPIObject
+
 import RPi.GPIO as GPIO
 
-class Button:
+class Button(BaseRPIObject):
     def __init__(self, gpio_num, name, callback=None):
+        super().__init__()
         self.gpio_num = gpio_num
         self.name = name
         print("Setuping on ({}) button as input gpio: {}".format(self.name, self.gpio_num))
