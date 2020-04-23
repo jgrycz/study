@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}Flasky{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>Witaj, {{ name }}!</h1>
+</div>
+<p>Lokalna data i czas: {{ moment(current_time).format('LLL') }}.</p>
+<p>TO było {{ moment(current_time).fromNow(refresh=True) }}</p>
+{% endblock %}
