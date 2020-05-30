@@ -10,7 +10,7 @@ class BasicsTestCase(unittest.TestCase):
         self.app_context.push()
         db.create_all()
 
-    def teardown(self):
+    def tearDown(self):
         db.session.remove()
         db.drop_all()
         self.app_context.pop()
