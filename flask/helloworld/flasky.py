@@ -23,3 +23,12 @@ def test(test_names):
     else:
         tests = unittest.TestLoader().discover('tests')
     unittest.TextTestRunner(verbosity=2).run(tests)
+
+
+from flask_login import login_required
+
+
+@app.route('/secret')
+@login_required
+def secret():
+    return 'Dostep zabroniony'
