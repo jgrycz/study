@@ -33,3 +33,18 @@ class ChangePasswordForm(FlaskForm):
     new_password = PasswordField('New password', validators=[DataRequired(), EqualTo('new_password2', 'Passwords have to be equal')])
     new_password2 = PasswordField('New password', validators=[DataRequired()])
     change = SubmitField('Change')
+
+
+class ResetPasswordForm(FlaskForm):
+    email = StringField('E-mail', validators=[DataRequired(), Length(1, 64), Email()])
+    submit = SubmitField('Submit')
+
+    def validate_email(self, field):
+        if not User.query.filter_by(email=field.data).first():
+            raise ValidationError('Can not find email address')
+
+
+class SetNewPasswordForm(FlaskForm):
+    new_password = PasswordField('New password', validators=[DataRequired(), EqualTo('new_password2', 'Passwords have to be equal')])
+    new_password2 = PasswordField('New password', validators=[DataRequired()])
+    change = SubmitField('Submit')
