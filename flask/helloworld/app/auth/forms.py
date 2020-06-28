@@ -48,3 +48,8 @@ class SetNewPasswordForm(FlaskForm):
     new_password = PasswordField('New password', validators=[DataRequired(), EqualTo('new_password2', 'Passwords have to be equal')])
     new_password2 = PasswordField('New password', validators=[DataRequired()])
     change = SubmitField('Submit')
+
+
+class ChangeEmailForm(FlaskForm):
+    new_email = StringField('New e-mail', validators=[DataRequired(), Length(1, 64), Email()])
+    submit = SubmitField('Submit')

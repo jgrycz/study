@@ -74,6 +74,26 @@ class User(UserMixin, db.Model):
         db.session.add(user)
         return True
 
+    def generate_change_email_token(self, new_email, expiration=3600):
+        s = Serializer(current_app.config['SECRET_KEY'], expiration)
+        return s.dumps({'change_email': self.id, 'new_email': new_email}).decode('utf-8')
+
+    @staticmethod
+    def change_email(token):
+        s = Serializer(current_app.config['SECRET_KEY'])
+        try:
+            data = s.loads(token.encode('utf-8'))
+        except:
+            return False
+        user = User.query.get(data.get('change_email'))
+        new_email = data.get('new_email')
+        if user is None:
+            return False
+        user.email = new_email
+        db.session.add(user)
+        return True
+
+
 
 @login_manager.user_loader
 def load_user(user_id):

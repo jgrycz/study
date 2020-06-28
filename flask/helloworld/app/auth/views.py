@@ -2,7 +2,8 @@ from flask import render_template, redirect, request, url_for, flash
 from flask_login import login_user, logout_user, login_required, current_user
 from . import auth
 from ..models import User
-from .forms import LoginForm, RegistrationForm, ChangePasswordForm, ResetPasswordForm, SetNewPasswordForm
+from .forms import LoginForm, RegistrationForm, ChangePasswordForm, \
+    ResetPasswordForm, SetNewPasswordForm, ChangeEmailForm
 from .. import db
 
 
@@ -124,3 +125,27 @@ def reset_password(token):
         flash('Your password has been changed!')
         return redirect(url_for('main.index'))
     return render_template('auth/reset_password.html', form=form)
+
+
+@auth.route('/change_email_request', methods=['GET', 'POST'])
+@login_required
+def change_email_request():
+    form = ChangeEmailForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=current_user.email).first()
+        token = user.generate_change_email_token(form.new_email.data)
+        url = url_for('auth.confirm_change_email', token=token, _external=True)
+        flash('To confirm your email change visit following url: {}'.format(url))
+        return redirect(url_for('main.index'))
+    return render_template('auth/change_email_request.html', form=form)
+
+
+@auth.route('/confirm_change_email/<token>', methods=['GET', 'POST'])
+@login_required
+def confirm_change_email(token):
+    if User.change_email(token):
+        db.session.commit()
+        flash('Your email address has been changed!')
+    else:
+        flash('Change email url is incorrect or has expired')
+    return redirect(url_for('main.index'))
