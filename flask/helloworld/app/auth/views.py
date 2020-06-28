@@ -2,7 +2,7 @@ from flask import render_template, redirect, request, url_for, flash
 from flask_login import login_user, logout_user, login_required, current_user
 from . import auth
 from ..models import User
-from .forms import LoginForm, RegistrationForm
+from .forms import LoginForm, RegistrationForm, ChangePasswordForm
 from .. import db
 
 
@@ -81,3 +81,20 @@ def resend_information():
     url = url_for('auth.confirm', token=token, _external=True)
     flash('Before you log in activate your account please, clicking following url: {}'.format(url))
     return redirect(url_for('main.index'))
+
+
+
+@auth.route('/change_password', methods=['GET', 'POST'])
+@login_required
+def change_password():
+    form = ChangePasswordForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=current_user.email).first()
+        if user.verify_password(form.old_password.data):
+            user.password = form.new_password.data
+            db.session.add(user)
+            db.session.commit()
+            flash('Your password has been changed!')
+        else:
+            flash('Incorrect current password')
+    return render_template('auth/change_password.html', form=form)
