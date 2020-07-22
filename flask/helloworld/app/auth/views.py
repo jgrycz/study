@@ -61,11 +61,13 @@ def confirm(token):
 
 @auth.before_app_request
 def before_request():
-    if current_user.is_authenticated \
-            and not current_user.confirmed \
-            and request.blueprint != 'auth' \
-            and request.endpoint != 'static':
-        return redirect(url_for('auth.unconfirmed'))
+    if current_user.is_authenticated:
+        current_user.ping()
+        if not current_user.confirmed \
+                and request.endpoint \
+                and request.blueprint != 'auth' \
+                and request.endpoint != 'static':
+            return redirect(url_for('auth.unconfirmed'))
 
 
 @auth.route('/unconfirmed')
@@ -143,7 +145,7 @@ def change_email_request():
 @auth.route('/confirm_change_email/<token>', methods=['GET', 'POST'])
 @login_required
 def confirm_change_email(token):
-    if User.change_email(token):
+    if current_user.change_email(token):
         db.session.commit()
         flash('Your email address has been changed!')
     else:
