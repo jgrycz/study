@@ -1,5 +1,6 @@
 from wtforms import StringField, SubmitField, TextAreaField, BooleanField, SelectField
 from wtforms.validators import DataRequired, Length, Regexp, Email
+from flask_pagedown.fields import PageDownField
 from flask_wtf import FlaskForm
 from ..models import Role
 
@@ -41,5 +42,5 @@ class EditProfileAdminForm(FlaskForm):
             raise ValidationError('Username is already in use')
 
 class PostForm(FlaskForm):
-    body = TextAreaField('Write something..', validators=[DataRequired()])
+    body = PageDownField('Write something..', validators=[DataRequired()])
     submit = SubmitField('Wyslij')
